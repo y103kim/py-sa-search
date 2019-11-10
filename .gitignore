@@ -1,8 +1,8 @@
-/test
 /out
 
 *.swp
 *.so
+*.sa
 
 __pycache__/
 *.py[cod]
