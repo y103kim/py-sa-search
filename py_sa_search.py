@@ -1,5 +1,6 @@
 from ctypes import *
 import os
+import timeit
 
 base = os.path.dirname(os.path.abspath(__file__))
 SA = cdll.LoadLibrary(os.path.join(base, "out/sa.so"))
@@ -37,11 +38,35 @@ def search(path, word, cnt):
                 ret[s] = text[s:e]
     return sorted(ret.items())
 
-def testSA():
+def prepareSA():
     path = "test/kernel.log"
     genSuffixArray(path)
-    ret = search(path, "microcode", 5)
-    import pprint
-    pprint.pprint(ret, width=200)
 
-testSA()
+def testSA():
+    path = "test/kernel.log"
+    ret = search(path, "@!@", 30)
+
+def testLinear():
+    path = "test/kernel.log"
+    word = b"@!@"
+    ret = {}
+    with open(path, "rb") as f:
+        text = f.read();
+        indices = []
+        pos = 0
+        while len(indices) < 30:
+            pos = text.find(word, pos+1)
+            if pos == -1: break
+            indices.append(pos)
+        for index in indices:
+            if index == -1:
+                break
+            s = text.rfind(b"\n", 0, index)+1
+            e = text.find(b"\n", index)
+            if not s in ret:
+                ret[s] = text[s:e]
+
+# prepareSA()
+print("Linear", timeit.timeit(testLinear, number=1))
+print("SA", timeit.timeit(testSA, number=1))
+

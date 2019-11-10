@@ -142,14 +142,14 @@ void search(const char* path, const char* match, int* result, int resultCnt) {
   free(input);
 }
 
-#if 0
+#if 1
 // Test Code of the sa.c
 int main() {
   const char* path = "./test/kernel.log";
-  genSA(path);
+  /* genSA(path); */
   int res[30];
   search(path, "microcode", res, 30);
-  for(int i = 0; i < 30; i++) printf("%d ", res[i]);
+  /* for(int i = 0; i < 30; i++) printf("%d ", res[i]); */
   return 0;
 }
 #endif
