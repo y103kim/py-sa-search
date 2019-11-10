@@ -1,0 +1,9 @@
+/test
+/out
+
+*.swp
+*.so
+
+__pycache__/
+*.py[cod]
+*$py.class
